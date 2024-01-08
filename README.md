@@ -1,2 +1,2 @@
 # Node-API
-Create a Node.js API and build a RESTful CRUD API with Node.js, Express and MongoDB.
+Created a Node.js API and built a RESTful CRUD API with Node.js, Express and MongoDB.
