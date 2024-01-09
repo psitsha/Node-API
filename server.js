@@ -6,6 +6,7 @@ const port = 3000
 
 //middleware
 app.use(express.json())
+app.use(express.urlencoded({extended: false}))
 
 //routes for web browser
 
@@ -17,7 +18,7 @@ app.get('/nodemon', (req, res) => {
     res.send('Hello Node with Nodemon')
     })
 
-// fetch ALL data from database
+// fetch ALL data from database route
 app.get('/products', async(req, res) => {
     try {
         const products = await Product.find({});
@@ -28,7 +29,7 @@ app.get('/products', async(req, res) => {
     }
 })
 
-// fetch a single product from the db
+// fetch a single product from the db route
 app.get('/products/:id', async(req, res) => {
     try {
         const {id} = req.params;
@@ -40,7 +41,7 @@ app.get('/products/:id', async(req, res) => {
     }
 })
 
-// save data into databse
+// save data into databse route
 app.post('/products', async(req, res) => {
     // console.log(req.body);
    // res.send(req.body)
@@ -51,6 +52,24 @@ app.post('/products', async(req, res) => {
         console.log(error.message);
         res.status(500).json({message: error.message})
    }
+})
+
+// Update a product route
+app.put('/products/:id', async(req, res) => {
+    try {
+        const {id} = req.params;
+        const product =  await Product.findByIdAndUpdate(id, req.body);
+        // product not found
+        if(!product){
+            return res.status(404).json({message: `Cannot find product with ID ${id}`})
+        }
+        // get latest info from the db
+        const updatedProduct = await Product.findById(id);
+        res.status(200).json(updatedProduct);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({message: error.message});
+    }
 })
 
 // mongoose.set("strictQuery", false)
