@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/nodemon', (req, res) => {
-    res.send('Hello Node with Nodemon')
+    res.send('Test, Hello Node with Nodemon')
     })
 
 // fetch ALL data from database route
@@ -23,7 +23,7 @@ app.get('/products', async(req, res) => {
     try {
         const products = await Product.find({});
         res.status(200).json(products);
-        
+
     } catch (error) {
         console.log(error.message);
         res.status(500).json({message: error.message})
